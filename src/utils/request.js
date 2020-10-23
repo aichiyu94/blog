@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { Message, Loading } from 'element-ui';
+// import { Message, Loading } from 'element-ui';
 import errorMsg from './error-msg.js';
 
 var requestCount = 0; // 请求次数
 var loadingInstance = null;
 
-function message(msg) {
-  Message.error({ message: errorMsg.format(msg), offset: 200, duration: 1500 })
-}
+// function message(msg) {
+//   Message.error({ message: errorMsg.format(msg), offset: 200, duration: 1500 })
+// }
 
 // create an axios instance
 // axios.create({
@@ -22,9 +22,9 @@ axios.interceptors.request.use(
     //   config.headers['X-Token'] = getToken()
     // }
 
-    if (requestCount === 0) {
-      loadingInstance = Loading.service({ fullscreen: true, background: 'rgba(0, 0, 0, 0.5)' });
-    }
+    // if (requestCount === 0) {
+    //   loadingInstance = Loading.service({ fullscreen: true, background: 'rgba(0, 0, 0, 0.5)' });
+    // }
     requestCount++;
     if (!config.url.match(RegExp(/http/))) {
       config.url = process.env.VUE_APP_BASE_API + config.url;
@@ -41,14 +41,14 @@ axios.interceptors.response.use(
   response => {
     requestCount--;
     if (requestCount === 0) {
-      loadingInstance.close();
+      // loadingInstance.close();
     }
     return response.data;
   },
   error => {
     requestCount--;
     if (requestCount === 0) {
-      loadingInstance.close();
+      // loadingInstance.close();
     }
     return Promise.reject(error)
   }
@@ -100,7 +100,7 @@ const http = {
       }
     } else {
       if (res.msg) {
-        message(res.msg);
+        // message(res.msg);
       }
       if (typeof error == 'function') {
         error(res);

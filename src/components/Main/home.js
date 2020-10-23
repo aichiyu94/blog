@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Right from './Right'
+import { fetchArticleList } from '../../api/article'
 
 class Carousel extends Component {
     constructor() {
@@ -23,48 +24,34 @@ class NewArticles extends Component {
     constructor() {
         super()
         this.state = {
-            articles: [
-                {
-                    bg: `${require("../../common/images/9.jpg")}`, title: 'js前端实现模糊查询',
-                    body: 'js前端实现模糊查询对于模糊查询，一般都是传关键字给后端，由后端来做。但是有时候一些轻量级的列表前端来做可以减少ajax请求，在一定程度上提高用户体验。废话不多...',
-                    publishTime: '2019-04-03',
-                    author: '惜缘',
-                    thumUp: 2,
-                    browser: 2,
-                    catalog: '生活',
-                    way: 'right',
-                },
-                {
-                    bg: `${require("../../common/images/6.jpg")}`, title: 'js前端实现模糊查询',
-                    body: 'js前端实现模糊查询对于模糊查询，一般都是传关键字给后端，由后端来做。但是有时候一些轻量级的列表前端来做可以减少ajax请求，在一定程度上提高用户体验。废话不多...',
-                    publishTime: '2019-04-03',
-                    author: 'Luke',
-                    thumUp: 2,
-                    browser: 8,
-                    catalog: '生活'
-                },
-                {
-                    bg: `${require("../../common/images/7.jpg")}`, title: 'js前端实现模糊查询',
-                    body: 'js前端实现模糊查询对于模糊查询，一般都是传关键字给后端，由后端来做。但是有时候一些轻量级的列表前端来做可以减少ajax请求，在一定程度上提高用户体验。废话不多...',
-                    publishTime: '2019-04-03',
-                    author: '惜缘',
-                    thumUp: 2,
-                    browser: 2,
-                    catalog: '生活',
-                    way: 'left',
-                },
-                {
-                    bg: `${require("../../common/images/6.jpg")}`, title: 'js前端实现模糊查询',
-                    body: 'js前端实现模糊查询对于模糊查询，一般都是传关键字给后端，由后端来做。但是有时候一些轻量级的列表前端来做可以减少ajax请求，在一定程度上提高用户体验。废话不多...',
-                    publishTime: '2019-04-03',
-                    author: 'abc',
-                    thumUp: 2,
-                    browser: 2,
-                    catalog: '生活',
-                    way: 'right',
-                }]
+            articles: []
         }
     }
+    componentDidMount() {
+        debugger
+        fetchArticleList(r => {
+            let articles = [];
+            const result = r.message;
+            for (const art of result) {
+                const a = art.article
+                articles.push({
+                    bg: `${require("../../common/images/9.jpg")}`,
+                    title: a.title,
+                    body: a.body,
+                    publishTime: a.modifyTime,
+                    author: a.authorNickName,
+                    thumUp: a.browswerCount,
+                    browser: a.browswerCount,
+                    catalog: '技术',
+                    way: 'right'
+                })
+            }
+            this.setState({
+                articles: articles
+            })
+        })
+    }
+
     render() {
         const right = "media wow bounceInRight";
         const left = "media wow bounceInLeft";
@@ -77,7 +64,10 @@ class NewArticles extends Component {
                         </div>
                         <div className="media-body art-content">
                             <h5 className="mt-0 mb-1"><a href="./article.html">{article.title}</a></h5>
-                            <p>{article.body}</p>
+                            <p>
+                                {/* <div dangerouslySetInnerHTML={ __html: article.body }/> */}
+                                <div dangerouslySetInnerHTML={{ __html: '<div>123</div>' }}></div>
+                            </p>
                             <ul>
                                 <li><a title={article.author + article.publishTime + '发表'}><i className="el-time"></i>{article.publishTime}</a></li>
                                 <li className="d-none d-sm-none d-md-none d-lg-block"><a href="/index/about/index.html" title={'作者： ' + article.author}><i className="el-user"></i>{article.author}</a></li>
