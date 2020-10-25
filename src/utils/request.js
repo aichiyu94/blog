@@ -56,6 +56,7 @@ axios.interceptors.response.use(
 
 const http = {
   get: (url, params, success, error) => {
+    url = process.env.REACT_APP_BASE_URL + url;
     axios.get(url, { params: params }).then(res => {
       http.response(res, success, error);
     })
@@ -66,6 +67,8 @@ const http = {
     })
   },
   post: (url, params, success, error) => {
+    url = process.env.REACT_APP_BASE_URL + url;
+    console.log(url)
     axios.post(url, params).then(res => {
       http.response(res, success, error);
     })

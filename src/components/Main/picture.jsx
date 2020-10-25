@@ -1,5 +1,4 @@
 import React from 'react'
-import Right from './Right'
 
 function Picture() {
     return (
@@ -17,7 +16,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6 ">
                             <div class="card box-shadow  mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src={require('../../common/images/1.png')} data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src={require('../../common/images/1.png')} data-holder-rendered="true" />
                                 </div>
 
                                 <div class="card-body">
@@ -34,7 +33,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg showtitle">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src={require('../../common/images/2.png')} data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src={require('../../common/images/2.png')} data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -50,7 +49,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src="images/3.png" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/3.png" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -66,7 +65,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6 ">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src="images/1.png" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/1.png" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -86,7 +85,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6  ">
                             <div class="card box-shadow  mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src="images/4.jpg" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/4.jpg" data-holder-rendered="true" />
                                 </div>
 
                                 <div class="card-body">
@@ -103,7 +102,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg showtitle">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src="images/6.jpg" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/6.jpg" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -119,7 +118,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src="images/5.jpg" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/5.jpg" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -135,7 +134,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6 ">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style=" width: 100%; display: block;" src="images/13.jpg" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/13.jpg" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -150,8 +149,6 @@ function Picture() {
                         </div>
                     </div>
                 </div>
-                {/* 右边 */}
-                <Right />
             </div>
         </div>)
 }

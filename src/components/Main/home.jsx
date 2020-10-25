@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
-import Right from './Right'
-import { fetchArticleList } from '../../api/article'
+import Right from './Right.jsx'
+import { fetchArticleList, recommendationArticle } from '../../api/article'
+import { timeDiffer, timeFormat } from '../../utils/timeUtils'
+
+// import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 class Carousel extends Component {
     constructor() {
         super();
         this.state = {
-            images: [1, 2, 3]
+            images: [
+                'http://img.juimg.com/tuku/yulantu/120421/107064-12042113493828.jpg',
+                'https://uploadfile.huiyi8.com/2014/0517/20140517053849606.jpg',
+                'http://img.juimg.com/tuku/yulantu/131224/328211-13122411032394.jpg']
         }
     }
     render() {
         return (
             this.state.images.map((item, idx) => (
                 <div className={idx === 0 ? 'carousel-item active' : 'carousel-item'} key={idx}>
-                    <img src={require('../../common/images/' + item + '.png')} className="d-block w-100" alt="..." />
+                    <img src={item} className="d-block w-100" alt="..." />
                 </div>
             ))
         )
@@ -28,22 +34,21 @@ class NewArticles extends Component {
         }
     }
     componentDidMount() {
-        debugger
-        fetchArticleList(r => {
+        fetchArticleList(0, 5, r => {
             let articles = [];
             const result = r.message;
-            for (const art of result) {
-                const a = art.article
+            for (const a of result) {
                 articles.push({
-                    bg: `${require("../../common/images/9.jpg")}`,
-                    title: a.title,
+                    id: a.id,
+                    title: a.first_title,
+                    cover: a.cover_image || `${require("../../common/images/9.jpg")}`,
                     body: a.body,
-                    publishTime: a.modifyTime,
+                    publishTime: new Date(a.publishTime).toString('MM-dd'),
                     author: a.authorNickName,
-                    thumUp: a.browswerCount,
-                    browser: a.browswerCount,
-                    catalog: '技术',
-                    way: 'right'
+                    thumbUp: a.thumbUpCount,
+                    browser: a.browserCount,
+                    catalog: a.tags.indexOf(',') > -1 ? a.tags.split(',')[0] : a.tags || '技术',
+                    way: Math.round(Math.random()) === 0 ? 'right' : 'left'
                 })
             }
             this.setState({
@@ -60,18 +65,19 @@ class NewArticles extends Component {
                 return (
                     <li className={article.way === 'right' ? right : left} key={index}>
                         <div className="art-img">
-                            <img className="mr-3" src={article.bg} alt="Generic placeholder image" />
+                            <img className="mr-3" src={article.cover} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content">
-                            <h5 className="mt-0 mb-1"><a href="./article.html">{article.title}</a></h5>
+                            <h5 className="mt-0 mb-1">
+                                <a href={'/View?articleId=' + article.id}>{article.title}</a>
+                            </h5>
                             <p>
-                                {/* <div dangerouslySetInnerHTML={ __html: article.body }/> */}
-                                <div dangerouslySetInnerHTML={{ __html: '<div>123</div>' }}></div>
+                                {article.title}
                             </p>
                             <ul>
                                 <li><a title={article.author + article.publishTime + '发表'}><i className="el-time"></i>{article.publishTime}</a></li>
                                 <li className="d-none d-sm-none d-md-none d-lg-block"><a href="/index/about/index.html" title={'作者： ' + article.author}><i className="el-user"></i>{article.author}</a></li>
-                                <li><a title={'已有' + article.thumUp + '个赞'}><i className="el-heart"></i>{article.thumUp}</a></li>
+                                <li><a title={'已有' + article.thumbUp + '个赞'}><i className="el-heart"></i>{article.thumbUp}</a></li>
                                 <li><a title={'已有' + article.browser + '次浏览'}><i className="el-eye-open"></i>{article.browser}</a></li>
                                 <li className="d-none d-sm-none d-md-none d-lg-block"><a href="/index/article/index/id/32.html" title="查看分类"><i className="el-th-list"></i>{article.catalog}</a></li>
                             </ul>
@@ -83,30 +89,38 @@ class NewArticles extends Component {
     }
 }
 
+
 class Recommendation extends Component {
     constructor() {
         super();
         this.state = {
-            articles: [
-                {
-                    bg: `${require('../../common/images/5.jpg')}`, title: '测试图文',
-                    publishTime: '2019-04-03', timeSpan: '9 mins'
-                }, {
-                    bg: `${require('../../common/images/6.jpg')}`, title: '测试图文',
-                    publishTime: '2019-04-03', timeSpan: '8 mins'
-                }, {
-                    bg: `${require('../../common/images/10.jpg')}`, title: '测试图文',
-                    publishTime: '2019-04-03', timeSpan: '3 mins'
-                }, {
-                    bg: `${require('../../common/images/12.png')}`, title: '测试图文',
-                    publishTime: '2019-04-03', timeSpan: '5 mins'
-                }
-            ]
+            recommdations: []
         }
     }
+
+    componentDidMount() {
+        recommendationArticle(6, r => {
+            let recommdations = []
+            const result = r.message;
+            for (const art of result) {
+                const timeStr = timeFormat(new Date(art.publishTime));
+                recommdations.push({
+                    id: art.id,
+                    bg: art.cover_image || `${require('../../common/images/5.jpg')}`,
+                    title: art.second_title,
+                    publishTime: timeStr,
+                    timeSpan: timeDiffer(new Date(art.publishTime))
+                })
+            }
+            this.setState({
+                recommdations: recommdations
+            })
+        });
+    }
+
     render() {
         return (
-            this.state.articles.map((article, idx) => {
+            this.state.recommdations.map((article, idx) => {
                 return (
                     <div className="col-md-4 bgc mb-4" key={idx}>
                         <div className="card  box-shadow mt-4">
@@ -114,7 +128,7 @@ class Recommendation extends Component {
                                 <img className="card-img-top" style={{ width: '100%', display: 'block' }} src={article.bg} data-holder-rendered="true" />
                             </div>
                             <div className="card-body">
-                                <a href="#">{article.title}</a>
+                                <a href={'/View?articleId=' + article.id}>{article.title}</a>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btn-group showtitle">
                                         <i className="el-time"></i>{article.publishTime}

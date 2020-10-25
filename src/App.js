@@ -1,20 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Nav from './components/Nav/nav'
-import Main from './components/Main/home'
-import Footer from './components/Footer/footer'
 
-import { Router, Route } from 'react-router-dom'
+import Router from './Router.jsx'
+
 
 function App() {
   return (
-    <div className="App">
-      <Nav />
-      <Main />
-      <Footer />
-    </div>
+    <Router />
   );
 }
-
 export default App;

@@ -100,11 +100,12 @@ a{
 }
 
 .art-content{
-    width: 71%;
+    width: 70%;
     float: right;
     position: relative;
     /*padding-left: 20px;*/
     margin-left: 10px;
+    word-break: break-all;
 }
 .art-content h5{
     background: none;
@@ -155,7 +156,6 @@ a{
 /*右边文章*/
 /*推荐图文*/
 .artimg-list>li{
-    width: 100%;
     /*margin: auto;*/
     padding: 25px;
     border: 1px solid rgba(0,0,0,0);
@@ -183,10 +183,9 @@ a{
     background: #f9fffc;
 }
 .artimg-img{
-    width: 45%;
+    width: 160px;
     height: 85px;
     float: left;
-    overflow: hidden;
 
 }
 .artimg-img img{
@@ -656,6 +655,8 @@ a{
 .article-body{
     padding: 20px;
     min-height: 400px;
+    word-break: break-all;
+    overflow: scroll;
 }
 
 
@@ -698,8 +699,11 @@ a{
 
 }
 
-
-
+/** 重写 bootstrap样式
+*/
+.list-unstyled{
+    width: 100%;
+}
 
 
 
