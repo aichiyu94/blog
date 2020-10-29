@@ -117,7 +117,7 @@ function Footer() {
             <div className="foot-nav text-center">
                 <div className="copy-right"><span>Copyright © xxxxxxxx 2018 </span></div>
                 <div className="bottom-nav">
-                    <span>ICP备xxxx号 </span>
+                    <span>蜀ICP备2020030978号-1</span>
                 </div>
             </div>
         </footer>)
