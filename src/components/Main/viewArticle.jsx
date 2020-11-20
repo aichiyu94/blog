@@ -19,7 +19,7 @@ class Recommendation extends Component {
             for (const art of result) {
                 const timeStr = timeFormat(new Date(art.publishTime));
                 recommdations.push({
-                    cover: art.cover_image || `${require('../../common/images/5.jpg')}`,
+                    cover: art.cover_image,
                     first_title: art.first_title,
                     second_title: art.second_title,
                     publishTime: timeStr,

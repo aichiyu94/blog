@@ -16,9 +16,8 @@ function Picture() {
                         <div class="col-md-3 col-sm-6 ">
                             <div class="card box-shadow  mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src={require('../../common/images/1.png')} data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="https://sm.ms/image/e4Adjrb3MwlEXt8" data-holder-rendered="true" />
                                 </div>
-
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
                                     <div class="d-flex justify-content-between align-items-center">
@@ -33,7 +32,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg showtitle">
-                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src={require('../../common/images/2.png')} data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="https://sm.ms/image/KXaWkrus1fmLZtD" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -65,7 +64,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6 ">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/1.png" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="https://sm.ms/image/e4Adjrb3MwlEXt8" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -102,7 +101,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg showtitle">
-                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/6.jpg" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="https://sm.ms/image/3o2sTFWLcrg4pbD" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>
@@ -118,7 +117,7 @@ function Picture() {
                         <div class="col-md-3 col-sm-6">
                             <div class="card  box-shadow mt-4">
                                 <div class="showimg">
-                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="images/5.jpg" data-holder-rendered="true" />
+                                    <img class="card-img-top" style={{ width: '100%', display: 'block' }} src="https://sm.ms/image/ZQn4tIzUCH8Bm9R" data-holder-rendered="true" />
                                 </div>
                                 <div class="card-body">
                                     <a href="#">测试图文</a>

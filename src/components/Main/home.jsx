@@ -41,7 +41,7 @@ class NewArticles extends Component {
                 articles.push({
                     id: a.id,
                     title: a.first_title,
-                    cover: a.cover_image || `${require("../../common/images/9.jpg")}`,
+                    cover: a.cover_image || "https://sm.ms/image/3o2sTFWLcrg4pbD",
                     body: a.body,
                     publishTime: new Date(a.publishTime).toString('MM-dd'),
                     author: a.authorNickName,
@@ -106,7 +106,7 @@ class Recommendation extends Component {
                 const timeStr = timeFormat(new Date(art.publishTime));
                 recommdations.push({
                     id: art.id,
-                    bg: art.cover_image || `${require('../../common/images/5.jpg')}`,
+                    bg: art.cover_image,
                     title: art.second_title,
                     publishTime: timeStr,
                     timeSpan: timeDiffer(new Date(art.publishTime))
@@ -125,7 +125,7 @@ class Recommendation extends Component {
                     <div className="col-md-4 bgc mb-4" key={idx}>
                         <div className="card  box-shadow mt-4">
                             <div className="showimg">
-                                <img className="card-img-top" style={{ width: '100%', display: 'block' }} src={article.bg} data-holder-rendered="true" />
+                                <img className="card-img-top" style={{ width: '100%', height:'150px', display: 'block' }} src={article.bg} data-holder-rendered="true" />
                             </div>
                             <div className="card-body">
                                 <a href={'/View?articleId=' + article.id}>{article.title}</a>
@@ -153,12 +153,12 @@ function Home() {
                     <div className="container">
                         <div className="row wow fadeInDown">
                             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                                <ol className="carousel-indicators">
+                                <ol className="carousel-indicators" >
                                     <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                                 </ol>
-                                <div className="carousel-inner">
+                                <div className="carousel-inner" style={{ height :350+'px'}}>
                                     <Carousel />
                                 </div>
                                 <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

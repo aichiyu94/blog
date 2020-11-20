@@ -78,7 +78,7 @@ class About extends Component {
                                         <div className="col-md-4 bgc mb-4">
                                             <div className="card  box-shadow mt-4">
                                                 <div className="showimg">
-                                                    <img className="card-img-top" style={{ width: '100%', display: 'block' }} src="images/9.jpg" data-holder-rendered="true" />
+                                                    <img className="card-img-top" style={{ width: '100%', display: 'block' }} src="https://sm.ms/image/3o2sTFWLcrg4pbD" data-holder-rendered="true" />
                                                 </div>
                                                 <div className="card-body">
                                                     <a href="#">测试图文</a>
