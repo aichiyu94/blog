@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Home from './components/Main/home.jsx'
-import Software from './components/Main/software.jsx'
+import Chat from './components/Main/chat.jsx'
 import Picture from './components/Main/picture.jsx'
 import About from './components/Main/about.jsx'
 import Catalog from './components/Main/catalog.jsx'
@@ -19,7 +19,7 @@ function router() {
             <Nav />
             <Router>
                 <Route exact path="/" component={Home}></Route>
-                <Route exact path="/Software" component={Software}></Route>
+                <Route exact path="/Chat" component={Chat}></Route>
                 <Route exact path="/Picture" component={Picture}></Route>
                 <Route exact path="/About" component={About}></Route>
                 <Route exact path="/Catalog" component={Catalog}></Route>

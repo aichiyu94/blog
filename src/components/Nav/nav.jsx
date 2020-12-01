@@ -28,7 +28,7 @@ class Navigation extends Component {
                             </Router> */}
                             </li>
                             <li className="nav-item ">
-                                <a className="nav-link" href="/Software">软件</a>
+                                <a className="nav-link" href="/Chat">说说</a>
                                 {/* <Router>
                                 <Link className="nav-link" to="/chat">说说</Link>
                             </Router> */}
@@ -49,7 +49,7 @@ class Navigation extends Component {
                                 <a className="nav-link" href="/Picture">相册</a>
                             </li>
                             <li className="nav-item ">
-                                <a className="nav-link" href="/Life">理财</a>
+                                <a className="nav-link" href="/Life">生活</a>
                             </li>
                             <li className="nav-item ">
                                 <a className="nav-link" href="/About">关于</a>
