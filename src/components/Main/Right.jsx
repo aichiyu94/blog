@@ -7,7 +7,7 @@ import {
 } from '../../api/article'
 import { visitorRecords } from '../../api/user'
 
-const userInfo = { name: '爱吃鱼', avater: `${require('../../common/images/1.png')}`, description: '一个全栈开发' }
+const userInfo = { name: '爱吃鱼', avater: 'https://sm.ms/image/e4Adjrb3MwlEXt8', description: '一个全栈开发' }
 var search = { key: '', history: [] }
 
 /**
@@ -89,7 +89,7 @@ class ArticleInteract extends Component {
                     articleFirst_title: c.first_title,
                     publishTime: timeStr,
                     articleAuthor: c.authorName,
-                    articleCover: c.articleCover || `${require("../../common/images/6.jpg")}`,
+                    articleCover: c.articleCover || "https://sm.ms/image/3o2sTFWLcrg4pbD",
                 })
             }
             this.setState({
@@ -103,7 +103,7 @@ class ArticleInteract extends Component {
                 return (
                     <li key={idx}>
                         <div className="art-hd-list-left">
-                            <a href={'/View?articleId=' + article.id}><img src={article.articleCover} alt="" /></a>
+                            <a href={'/View?articleId=' + article.id}><img src={article.articleCover} style={{ width:'50px', height:'50px' }} alt="" /></a>
                         </div>
                         <div className="art-hd-list-right">
                             <span><i className="el-user"></i>{article.articleAuthor}</span>
@@ -174,7 +174,7 @@ class Recommendation extends Component {
             for (const art of result) {
                 const timeStr = timeFormat(new Date(art.publishTime));
                 recommdations.push({
-                    bg: art.cover_image || `${require('../../common/images/5.jpg')}`,
+                    bg: art.cover_image,
                     timeSpan: timeDiffer(new Date(art.publishTime)),
                     first_title: art.first_title,
                     second_title: art.second_title,
@@ -196,7 +196,7 @@ class Recommendation extends Component {
                 return (
                     <li className="media" key={idx}>
                         <div className="artimg-img">
-                            <img className="mr-3" src={article.bg} alt="Generic placeholder image" />
+                            <img className="mr-3" src={article.bg} style={{ width:'100px' }} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content">
                             <h5 className="mt-0 mb-1">{article.first_title}</h5>

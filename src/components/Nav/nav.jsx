@@ -15,7 +15,7 @@ class Navigation extends Component {
         return (
             <nav className="navbar navbar-expand-lg navbar-light nav-color-nav  navbar-lk text-dark">
                 <div className="container">
-                    <a className="navbar-brand xiyuan" href="#"><img src={require('../../common/images/logo2.png')} alt="" /></a>
+                    <a className="navbar-brand xiyuan" href="#"><img src={require('../../common/images/logo-icon.png')} alt="" /></a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#nabmune" aria-controls="nabmune" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
