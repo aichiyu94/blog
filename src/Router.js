@@ -2,7 +2,7 @@ import React from 'react'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Home from './components/Main/home.js'
+import Home from './components/Main/home.jsx'
 import Finance from './components/Main/finance.jsx'
 import Picture from './components/Main/picture.jsx'
 import About from './components/Main/about.jsx'
