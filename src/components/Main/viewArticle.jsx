@@ -19,11 +19,19 @@ class Recommendation extends Component {
             for (const art of data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
+<<<<<<< HEAD
                     cover: art.coverImage || `${require('../../images/5.jpg')}`,
                     firstTitle: art.firstTitle,
                     secondTitle: art.secondTitle,
                     modifyTime: timeStr,
                     timeSpan: timeDiffer(new Date(art.modifyTime))
+=======
+                    cover: art.cover_image,
+                    first_title: art.first_title,
+                    second_title: art.second_title,
+                    publishTime: timeStr,
+                    timeSpan: timeDiffer(new Date(art.publishTime))
+>>>>>>> aac1f2b3b340b6fde91fb4b6d48f0f2d3295f085
                 })
             }
             this.setState({

@@ -12,8 +12,162 @@ import ArticleBrowserRank from '../Main/articleBrowserRank'
 import { connect } from 'react-redux'
 import { GetUser } from "../../redux/actions/index";
 
+<<<<<<< HEAD
 var search = { key: '', history: [] }
 
+=======
+const userInfo = { name: '爱吃鱼', avater: 'https://sm.ms/image/e4Adjrb3MwlEXt8', description: '一个全栈开发' }
+var search = { key: '', history: [] }
+
+/**
+ * 网站通告
+ */
+class WebsiteNotice extends Component {
+    constructor() {
+        super();
+        this.state = {
+            informs: [
+                { title: '买卖得心应手的时候，切忌得意忘形' },
+                { title: '有子万事足，无股一身轻' }
+            ]
+        };
+    }
+    render() {
+        return (
+            this.state.informs.map((inform, index) => {
+                return (
+                    <li key={index}><a href="">{inform.title}</a></li>
+                )
+            })
+        )
+    }
+}
+
+//留言
+class WebsiteComment extends Component {
+    constructor() {
+        super();
+        this.state = {
+            commentRank: []
+        };
+    }
+    componentDidMount() {
+        websiteCommentList(4, r => {
+            const data = r.message;
+            let comments = [];
+            for (const c of data) {
+                comments.push({ content: c.comment, viewCount: c.priseCount })
+            }
+            this.setState({
+                commentRank: comments
+            })
+        })
+    }
+    render() {
+        return (
+            this.state.commentRank.map((m, index) => {
+                return (
+                    <li key={index}>
+                        <span>{index + 1}</span>
+                        <a href="#">{m.content}
+                            <b>({m.viewCount})</b>
+                        </a>
+                    </li>
+                )
+            })
+        )
+    }
+}
+
+//文章互动
+class ArticleInteract extends Component {
+    constructor() {
+        super()
+        this.state = {
+            Interacts: []
+        }
+    }
+    componentDidMount() {
+        articleCommentRank(4, r => {
+            const data = r.message;
+            let interacts = [];
+            for (const c of data) {
+                const timeStr = timeFormat(new Date(c.publishTime));
+                interacts.push({
+                    id: c.articleId,
+                    articleFirst_title: c.first_title,
+                    publishTime: timeStr,
+                    articleAuthor: c.authorName,
+                    articleCover: c.articleCover || "https://sm.ms/image/3o2sTFWLcrg4pbD",
+                })
+            }
+            this.setState({
+                Interacts: interacts
+            })
+        })
+    }
+    render() {
+        return (
+            this.state.Interacts.map((article, idx) => {
+                return (
+                    <li key={idx}>
+                        <div className="art-hd-list-left">
+                            <a href={'/View?articleId=' + article.id}><img src={article.articleCover} style={{ width:'50px', height:'50px' }} alt="" /></a>
+                        </div>
+                        <div className="art-hd-list-right">
+                            <span><i className="el-user"></i>{article.articleAuthor}</span>
+                            <time>{article.publishTime}</time>
+                            <p>{article.articleFirst_title}</p>
+                        </div>
+                    </li>
+                )
+            })
+        )
+    }
+}
+
+//文章浏览排行
+class ArticleBrowserRank extends Component {
+    constructor() {
+        super()
+        this.state = {
+            browserRank: []
+        }
+    }
+    componentDidMount() {
+        articleBrowserRank(5, r => {
+            const data = r.message
+            let rank = [];
+            for (const a of data) {
+                rank.push({
+                    id: a.id,
+                    first_title: a.first_title,
+                    browserCount: a.browserCount
+                });
+            }
+            this.setState({
+                browserRank: rank
+            })
+        })
+    }
+
+    render() {
+        return (
+            this.state.browserRank.map((article, idx) => {
+                return (
+                    <li key={idx}>
+                        <span>{idx + 1}</span>
+                        <a href={'/View?articleId=' + article.id}>{article.first_title}
+                            <b>({article.browserCount})</b>
+                        </a>
+                    </li>
+                )
+            })
+        )
+    }
+}
+
+>>>>>>> aac1f2b3b340b6fde91fb4b6d48f0f2d3295f085
 //推荐
 class Recommendation extends Component {
     constructor(props) {
@@ -30,11 +184,19 @@ class Recommendation extends Component {
             for (const art of data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
+<<<<<<< HEAD
                     bg: art.coverImage,
                     timeSpan: timeDiffer(new Date(art.modifyTime)),
                     firstTitle: art.firstTitle,
                     secondTitle: art.secondTitle,
                     modifyTime: timeStr,
+=======
+                    bg: art.cover_image,
+                    timeSpan: timeDiffer(new Date(art.publishTime)),
+                    first_title: art.first_title,
+                    second_title: art.second_title,
+                    publishTime: timeStr,
+>>>>>>> aac1f2b3b340b6fde91fb4b6d48f0f2d3295f085
                     author: art.authorNickname,
                     thumbUp: art.thumbupCount,
                     browser: art.browserCount,
@@ -52,7 +214,7 @@ class Recommendation extends Component {
                 return (
                     <li className="media" key={idx}>
                         <div className="artimg-img">
-                            <img className="mr-3" src={article.bg} alt="Generic placeholder image" />
+                            <img className="mr-3" src={article.bg} style={{ width:'100px' }} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content">
                             <h5 className="mt-0 mb-1">{article.firstTitle}</h5>

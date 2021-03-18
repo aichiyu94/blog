@@ -17,8 +17,13 @@ class NewArticles extends Component {
             for (const a of data) {
                 articles.push({
                     id: a.id,
+<<<<<<< HEAD:src/components/Main/technlogy.jsx
                     title: a.firstTitle,
                     cover: a.coverImage || `${require("../../images/9.jpg")}`,
+=======
+                    title: a.first_title,
+                    cover: a.cover_image || "https://sm.ms/image/3o2sTFWLcrg4pbD",
+>>>>>>> aac1f2b3b340b6fde91fb4b6d48f0f2d3295f085:src/components/Main/catalog.jsx
                     body: a.body,
                     modifyTime: new Date(a.modifyTime).toString('MM-dd'),
                     author: a.authorNickName,
@@ -78,10 +83,17 @@ class Recommendation extends Component {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
                     id: art.id,
+<<<<<<< HEAD:src/components/Main/technlogy.jsx
                     bg: art.coverImage || `${require('../../images/5.jpg')}`,
                     timeSpan: timeDiffer(new Date(art.modifyTime)),
                     firstTitle: art.firstTitle,
                     modifyTime: timeStr
+=======
+                    bg: art.cover_image,
+                    timeSpan: timeDiffer(new Date(art.publishTime)),
+                    first_title: art.first_title,
+                    publishTime: timeStr
+>>>>>>> aac1f2b3b340b6fde91fb4b6d48f0f2d3295f085:src/components/Main/catalog.jsx
                 })
             }
             this.setState({
