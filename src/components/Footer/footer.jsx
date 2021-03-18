@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { articleCommentRank, websiteCommentList } from '../../api/article'
 
 //网站留言排行
@@ -12,13 +13,9 @@ class WebsiteMessageRank extends Component {
 
     componentDidMount() {
         websiteCommentList(4, r => {
-            const data = r.message;
-            let messages = [];
-            for (const c of data) {
-                messages.push({ content: c.comment, viewCount: c.priseCount })
-            }
+            const { data } = r;
             this.setState({
-                messageRank: messages
+                messageRank: data
             })
         })
     }
@@ -30,8 +27,8 @@ class WebsiteMessageRank extends Component {
                     <li key={idx}>
                         <span>{idx + 1}</span>
                         <a href="#">
-                            {r.content}
-                            <b>({r.viewCount})</b>
+                            {r.text}
+                            <b>({r.thumbUpCount})</b>
                         </a>
                     </li>
                 )
@@ -51,18 +48,9 @@ class ArticleCommentRank extends Component {
 
     componentDidMount() {
         articleCommentRank(4, r => {
-            const data = r.message;
-            let messages = [];
-            for (const c of data) {
-                messages.push({
-                    articleId: c.articleId,
-                    articleFirst_title: c.first_title,
-                    articleCover: c.articleCover,
-                    articleSecond_title: c.second_title
-                })
-            }
+            const { data } = r;
             this.setState({
-                commentRank: messages
+                commentRank: data
             })
         })
     }
@@ -73,11 +61,11 @@ class ArticleCommentRank extends Component {
                 return (
                     <li className="media" key={idx}>
                         <div className="footer-img">
-                            <img className="mr-3" src={comment.articleCover} alt="Generic placeholder image" />
+                            <img className="mr-3" src={comment.coverImage} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content footer-content">
-                            <h5 className="mt-0 mb-1">{comment.articleFirst_title}</h5>
-                            <p>{comment.articleSecond_title}</p>
+                            <h5 className="mt-0 mb-1">{comment.text}</h5>
+                            <p>{comment.firstTitle}</p>
                         </div>
                     </li>
                 )
@@ -86,41 +74,53 @@ class ArticleCommentRank extends Component {
     }
 }
 
-function Footer() {
-    return (
-        <footer id="footer">
-            <div className="container">
-                <div className="row footer-row">
-                    <div className="col-md-6">
-                        <div className="fooder-title">
-                            <h5>网站留言排行</h5>
+class Footer extends React.Component {
+    render() {
+        return (
+            <footer id="footer">
+                <div className="container">
+                    <div className="row footer-row">
+                        <div className="col-md-6">
+                            <div className="fooder-title">
+                                <h5>网站留言排行</h5>
+                            </div>
+                            <div className="something">
+                                <ul className="art-sort">
+                                    <WebsiteMessageRank />
+                                </ul>
+                            </div>
                         </div>
-                        <div className="something">
-                            <ul className="art-sort">
-                                <WebsiteMessageRank />
+                        <div className="col-md-6">
+                            <div className="fooder-title">
+                                <h5>文章评论排行</h5>
+                            </div>
+                            <ul className="list-unstyled footer-list">
+                                {/* 文章评论排行 */}
+                                <ArticleCommentRank />
                             </ul>
                         </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="fooder-title">
-                            <h5>文章评论排行</h5>
-                        </div>
-                        <ul className="list-unstyled footer-list">
-                            {/* 文章评论排行 */}
-                            <ArticleCommentRank />
-                        </ul>
-                    </div>
-                    {/* <div className="col-md-3">dASDsadASDasdASDas</div>
+                        {/* <div className="col-md-3">dASDsadASDasdASDas</div>
                     <div className="col-md-3">dASDsadASDasdASDas</div> */}
+                    </div>
                 </div>
-            </div>
-            <div className="foot-nav text-center">
-                <div className="copy-right"><span>Copyright © xxxxxxxx 2018 </span></div>
-                <div className="bottom-nav">
-                    <span>蜀ICP备2020030978号-1</span>
+                <div className="foot-nav text-center">
+                    <div className="copy-right"><span>Copyright © {this.props.userInfo.nickname} 2018 </span></div>
+                    <div className="bottom-nav">
+                        <span>蜀ICP备2020030978号-1</span>
+                    </div>
                 </div>
-            </div>
-        </footer>)
+            </footer>)
+    }
 }
 
-export default Footer
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.CachedUser,
+    }
+}
+
+
+const mapDispatchToProps = (Dispatch) => {
+    return {}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

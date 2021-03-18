@@ -73,6 +73,12 @@ const http = {
       http.response(res, success, error);
     })
   },
+
+  postAsync: async (url, params, error) => {
+    url = process.env.REACT_APP_BASE_URL + url;
+    console.log(url, 'Async');
+    return await axios.post(url, params);
+  },
   postFormData: (url, params, success, error) => {
     let formData = new FormData();
     for (let k in params) {
@@ -100,6 +106,9 @@ const http = {
     if (res.code === 200) {
       if (typeof success == 'function') {
         success(res);
+      }
+      else {
+        return res;
       }
     } else {
       if (res.msg) {

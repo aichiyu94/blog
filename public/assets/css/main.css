@@ -1,5 +1,5 @@
 body{
-    /*background: url("../images/bg3.jpg") no-repeat;*/
+    /*background: url("../../images/bg3.jpg") no-repeat;*/
     background: #E9EAED;
     background-size: cover;
     /*background-position: center center;*/
@@ -23,7 +23,13 @@ a{
     height: 45px;
 }
 .nav-color-nav{
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,1);
+    box-shadow: -1px -2px 12px 0px;
+    width: 100%;
+    display: block;
+    z-index: 100;
+    position: fixed;
+    top: 0px;
 }
 .nav-color a{
     color: #ff6700 !important;
@@ -298,6 +304,10 @@ a{
 
 .fxtp li span{
     display: inline-block;
+    width: 80px;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 /*博主头像*/
@@ -705,21 +715,12 @@ a{
     width: 100%;
 }
 
+/* Antd 样式 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.MainSpin{
+    margin: 20px 50%;
+    padding: 30px 50px;
+    text-align: center;
+    background: transparent;
+    border-radius: 4px;
+}

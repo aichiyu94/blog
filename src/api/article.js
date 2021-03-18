@@ -1,19 +1,19 @@
 import request from '../utils/request'
 
 /**
-     * 获取文章列表
-     */
-export function fetchArticleList(p, ps, success) {
-    request.post(`blog/articleList?page=${p}&pageSize=${ps}`, {}, success)
+ * 获取文章列表
+ */
+export async function fetchArticleList(condition) {
+    return await request.postAsync(`blog/articleList`, condition);
 }
 
 /**
  * 查询一个文章
- * @param {*} id 
+ * @param {*} title 
  * @param {*} success 
  */
 export function getArticle(id, success) {
-    request.post(`blog/article?articleId=${id}`, {}, success)
+    request.post(`blog/article`, { ArticleId: id }, success)
 }
 
 /**

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Right from './Right.jsx'
+import Right from './right.jsx'
 
 import { getArticle, recommendationArticle } from '../../api/article'
 import { timeFormat, timeDiffer } from '../../utils/timeUtils'
@@ -15,15 +15,15 @@ class Recommendation extends Component {
     componentDidMount() {
         recommendationArticle(6, r => {
             let recommdations = []
-            const result = r.message;
-            for (const art of result) {
-                const timeStr = timeFormat(new Date(art.publishTime));
+            const { data } = r.data;
+            for (const art of data) {
+                const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
-                    cover: art.cover_image || `${require('../../common/images/5.jpg')}`,
-                    first_title: art.first_title,
-                    second_title: art.second_title,
-                    publishTime: timeStr,
-                    timeSpan: timeDiffer(new Date(art.publishTime))
+                    cover: art.coverImage || `${require('../../images/5.jpg')}`,
+                    firstTitle: art.firstTitle,
+                    secondTitle: art.secondTitle,
+                    modifyTime: timeStr,
+                    timeSpan: timeDiffer(new Date(art.modifyTime))
                 })
             }
             this.setState({
@@ -43,13 +43,13 @@ class Recommendation extends Component {
                             </div>
 
                             <div className="card-body">
-                                <a href="#">{item.first_title}</a>
+                                <a href="#">{item.firstTitle}</a>
                                 <div className="body-cont">
-                                    <span>{item.second_title}</span>
+                                    <span>{item.secondTitle}</span>
                                 </div>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btn-group showtitle">
-                                        <i className="el-time"></i>{item.publishTime}
+                                        <i className="el-time"></i>{item.modifyTime}
                                     </div>
                                     <small className="text-muted"><i className="el-fire"></i>{item.timeSpan}</small>
                                 </div>
@@ -82,8 +82,8 @@ class View extends Component {
 
     componentDidMount() {
         getArticle(this.state.article.id, r => {
-            let a = r.message;
-            a.publishTime = timeFormat(a.publishTime);
+            let a = r.data;
+            a.modifyTime = timeFormat(a.modifyTime);
             this.setState({
                 article: a
             })
@@ -91,7 +91,8 @@ class View extends Component {
     }
 
     render() {
-        document.title = this.state.article.first_title
+        document.title = this.state.article.firstTitle;
+        let article = this.state.article;
         return (
             <div className="container mt-3">
                 <div className="row">
@@ -100,7 +101,7 @@ class View extends Component {
                             <div className="row mt-2">
                                 <div className="col-md-12 bgc">
                                     <div className="new">
-                                        <span>{this.state.article.first_title}</span>
+                                        <span>{article.firstTitle}</span>
                                         {/* <small>New Article</small> */}
                                     </div>
                                 </div>
@@ -110,10 +111,10 @@ class View extends Component {
                                 <div className="col-md-12 bgc">
                                     <div className="article-title">
                                         <ul>
-                                            <li><a title={this.state.article.authorNickName + this.state.article.publishTime + "发表"}><i className="el-time"></i>{this.state.article.publishTime}</a></li>
-                                            <li className="d-none d-sm-none d-md-none d-lg-block"><a href="/index/about/index.html" title={"作者： " + this.state.article.authorNickName}><i className="el-user"></i>{this.state.article.authorNickName}</a></li>
-                                            <li><a title={'已有' + this.state.article.thumbUp + '个赞'}><i className="el-heart"></i>{this.state.article.thumbUp}</a></li>
-                                            <li><a title={'已有' + this.state.article.browser + '次浏览'}><i className="el-eye-open"></i>{this.state.article.browser}</a></li>
+                                            <li><a title={article.authorNickname + article.modifyTime + "发表"}><i className="el-time"></i>{article.modifyTime}</a></li>
+                                            <li className="d-none d-sm-none d-md-none d-lg-block"><a href="/index/about/index.html" title={"作者： " + article.authorNickname}><i className="el-user"></i>{article.authorNickname}</a></li>
+                                            <li><a title={'已有' + article.thumbupCount + '个赞'}><i className="el-heart"></i>{article.thumbupCount}</a></li>
+                                            <li><a title={'已有' + article.browserCount + '次浏览'}><i className="el-eye-open"></i>{article.browserCount}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -121,7 +122,7 @@ class View extends Component {
 
                             <div className="row mt-2 bgc">
                                 <div className="article-body">
-                                    <div dangerouslySetInnerHTML={{ __html: this.state.article.body }}></div>
+                                    <div dangerouslySetInnerHTML={{ __html: article.body }}></div>
                                     <div className="row mt-2">
                                         <div className="col-md-12 bgc">
                                             <div className="new">

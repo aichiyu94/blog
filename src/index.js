@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import AppRouter from './Router';
 import * as serviceWorker from './serviceWorker';
+import 'antd/dist/antd.min.css';
+import { Provider } from 'react-redux';
+import { configureStore } from './redux/configureStore';
 
+const store = configureStore();
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>,
   document.getElementById('root')
 );
 
