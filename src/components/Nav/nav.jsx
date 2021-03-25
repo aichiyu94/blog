@@ -8,8 +8,7 @@ class Navigation extends Component {
     }
     componentDidMount() {
         userVisit(r => {
-            debugger
-            console.log(r)
+            console.log('Thank you for visiting our blog')
         })
     }
     render() {

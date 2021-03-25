@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import { fetchHotResourceList, fetchPictureDirectory, fetchPicturesByDir } from '../../api/resource'
 import { timeDiffer, timeFormat } from '../../utils/timeUtils'
+import { Image, Pagination, Space, Spin, Tabs, Modal, Input, Empty } from 'antd'
+import { encrypt } from '../../utils/cryptoJS'
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 import Right from './right.jsx'
 
@@ -10,55 +14,180 @@ class PictureDirectory extends Component {
         super();
         this.state = {
             albums: [],
+            dialogEnterPwd: false,
+            enteredPwd: "",
             directories: [],
+            albumsLoading: false,
             accessDirectory: {
                 Password: '',
                 Dir: '',
-                Width: 200,
-                Height: 200,
+                Height: 600,
+                Width: 800,
+                Pagination: {
+                    pageIndex: 1,
+                    pageSize: 9
+                }
             }
         }
     }
-    componentDidMount() {
-        fetchPictureDirectory(r => {
+    async componentDidMount() {
+        fetchPictureDirectory(async r => {
             const { data } = r;
             let directories = data;
             this.setState({
                 directories: directories
             })
 
+            let albums = [];
+            this.setState({
+                albums: albums,
+                accessDirectory: this.state.accessDirectory
+            })
+
             let accessDirectory = this.state.accessDirectory;
             accessDirectory.Dir = directories[0].dir;
-            fetchPicturesByDir(accessDirectory, r => {
-                const { data } = r;
-                let albums = [];
-                if (data.length > 0) {
-                    data.map(d => { albums.push(d) });
-                }
-
-                this.setState({
-                    albums: albums
-                })
+            const result = (await fetchPicturesByDir(accessDirectory));
+            if (!result.data) {
+                alert(result.message);
+                return;
+            }
+            if (result.data.length > 0) {
+                result.data.map(d => { albums.push(d) });
+            }
+            let Dir = this.state.accessDirectory;
+            Dir.Pagination = result.pagination;
+            this.setState({
+                albums: albums,
+                accessDirectory: Dir
             })
         });
     }
+
+
+    nextPage = async () => {
+        let accessDirectory = this.state.accessDirectory;
+        const result = await fetchPicturesByDir(accessDirectory);
+        if (!result.data) {
+            alert(result.message);
+            this.setState({
+                albumsLoading: false
+            })
+            return;
+        }
+        const { data, pagination } = result.data;
+        let albums = [];
+        if (data.length > 0) {
+            data.map(d => { albums.push(d) });
+        }
+        let Dir = this.state.accessDirectory;
+        Dir.Pagination = pagination;
+        this.setState({
+            albums: albums,
+            accessDirectory: Dir,
+            albumsLoading: false
+        })
+    }
+
+    onPageIndexChange = (current) => {
+        let dir = this.state.accessDirectory;
+        dir.Pagination.pageIndex = current;
+        this.setState({
+            accessDirectory: dir
+        })
+
+        this.nextPage();
+    }
+
+    onShowSizeChange = (current, size) => {
+        let dir = this.state.accessDirectory;
+        dir.Pagination.pageSize = size;
+        this.setState({
+            accessDirectory: dir
+        })
+
+        this.nextPage();
+    }
+
+    tabChange = async (idx) => {
+        const selectedDir = this.state.directories[idx];
+        let dir = this.state.accessDirectory;
+        dir.Dir = selectedDir.dir;
+        if (selectedDir.password)
+            this.setState({
+                dialogEnterPwd: true,
+                accessDirectory: dir
+            })
+        else
+            await this.nextPage();
+    }
+
+    confirmedPwd = async () => {
+        if (!this.state.enteredPwd)
+            return;
+        this.setState({
+            dialogEnterPwd: false,
+            albumsLoading: true
+        })
+
+        let dir = this.state.accessDirectory;
+        dir.Password = encrypt(this.state.enteredPwd);
+        this.setState({
+            accessDirectory: dir
+        })
+
+        await this.nextPage();
+    }
+
     render() {
+        const { TabPane } = Tabs;
+        const pwdVisible = false;
         return (
-            this.state.albums.map((item, idx) => (
-                <div className="col-md-4 bgc mb-4 " key={idx}>
-                    <div className="card mb-4 box-shadow  mt-4">
-                        <div className="showimg">
-                            <img className="card-img-top" style={{ width: '100%', display: 'block' }} src={item.base64Context} data-holder-rendered="true" />
-                        </div>
-                        <div className="card-body">
-                            <a href="#">{item.name}</a>
-                            <div className="body-cont" >
-                                <span>{timeDiffer(new Date(item.uploadTime))}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div >
-            ))
+            <Space>
+                <Modal title="相册需要输入密码" visible={this.state.dialogEnterPwd} onOk={() => { this.confirmedPwd() }} onCancel={() => {
+                    this.setState({
+                        dialogEnterPwd: false
+                    })
+                }}>
+                    <Input.Password
+                        placeholder="input password"
+                        onChange={(e) => { this.setState({ enteredPwd: e.target.value }) }}
+                        iconRender={pwdVisible => (pwdVisible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                    />
+                </Modal>
+                <Tabs defaultActiveKey={0} onChange={this.tabChange} style={{ alignContent: 'center' }}>
+                    {
+                        this.state.directories.map((folder, idx) => {
+                            return <TabPane tab={folder.dir} key={idx}>
+                                <Image.PreviewGroup style={{ width: '900px' }}>
+                                    {
+                                        this.state.albumsLoading ?
+                                            <Space className="MainSpin" size="middle"><Spin size="large" /></Space> :
+                                            this.state.albums.length === 0 ? <Empty /> :
+                                                this.state.albums.map((item, idx) => (
+                                                    <div style={{ textAlign: 'center', margin: '15px', display: 'inline-block' }} key={idx}>
+                                                        <Image key={idx}
+                                                            width={200}
+                                                            src={item.base64Context}
+                                                        />
+                                                        <center>{item.name}</center>
+                                                    </div>
+                                                ))
+                                    }
+                                    <br />
+                                    {
+                                        this.state.albums.length === 0 ? <span /> :
+                                            <Pagination onShowSizeChange={this.onShowSizeChange} onChange={this.onPageIndexChange}
+                                                showQuickJumper size="small"
+                                                showTotal={() => { return 'total: ' + this.state.accessDirectory.Pagination.totalCount }}
+                                                pageSize={this.state.accessDirectory.Pagination.pageSize}
+                                                defaultCurrent={1} total={this.state.accessDirectory.Pagination.totalCount} />
+                                    }
+                                </Image.PreviewGroup>
+                            </TabPane>
+                        })
+                    }
+                </Tabs>
+            </Space >
         )
     }
 }
@@ -122,8 +251,6 @@ class Picture extends Component {
         super()
     }
 
-    // data:image/jpeg;base64,
-
     render() {
         return (
             <div className="container mt-3">
@@ -169,4 +296,15 @@ class Picture extends Component {
     }
 }
 
-export default Picture
+const mapStateToProps = (state) => {
+    return {
+        dialogEnterPwd: state.dialogEnterPwd,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Picture)

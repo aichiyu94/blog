@@ -24,6 +24,6 @@ export function fetchPictureDirectory(success) {
 /**
  * 根据目录获取图片列表
  */
-export function fetchPicturesByDir(data, success) {
-    request.post('resource/picturesByDir', data, success)
+export function fetchPicturesByDir(data) {
+    return request.postAsync('resource/picturesByDir', data)
 }

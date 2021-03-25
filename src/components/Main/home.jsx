@@ -61,7 +61,7 @@ class NewArticles extends Component {
     async componentDidMount() {
         await this.nextPage();
     }
-    
+
     render() {
         const right = "media wow bounceInRight";
         const left = "media wow bounceInLeft";
@@ -97,9 +97,9 @@ class NewArticles extends Component {
                         )
                     })
                 }
-                <Pagination onChange={this.onChange} showSizeChanger
+                <Pagination onChange={this.onChange}
                     showQuickJumper
-                    defaultPageSize={this.state.pagination.pageSize}
+                    pageSize={this.state.pagination.pageSize}
                     defaultCurrent={1} total={this.state.pagination.totalCount} />
             </ul>
         }
@@ -192,11 +192,13 @@ class Home extends React.Component {
                                     </ol>
                                     <div className="carousel-inner"  >
                                         {
-                                            this.state.bannerImages.map((item, idx) => (
-                                                <div className={idx === 0 ? 'carousel-item active' : 'carousel-item'} key={idx} >
-                                                    <img src={item.base64Context} onClick={() => { window.open(item.redirectTo) }} className="d-block w-100" alt="..." />
-                                                </div>
-                                            ))
+                                            this.state.bannerImages.length <= 0 ?
+                                                <Space className="MainSpin" size="middle"><Spin size="large" /></Space> :
+                                                this.state.bannerImages.map((item, idx) => (
+                                                    <div className={idx === 0 ? 'carousel-item active' : 'carousel-item'} key={idx} >
+                                                        <img src={item.base64Context} onClick={() => { window.open(item.redirectTo) }} className="d-block w-100" alt="..." />
+                                                    </div>
+                                                ))
                                         }
                                     </div>
                                     <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
