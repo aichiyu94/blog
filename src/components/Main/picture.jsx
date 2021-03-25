@@ -6,6 +6,8 @@ import { timeDiffer, timeFormat } from '../../utils/timeUtils'
 import { Image, Pagination, Space, Spin, Tabs, Modal, Input, Empty } from 'antd'
 import { encrypt } from '../../utils/cryptoJS'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Player } from "video-react";
+import "video-react/dist/video-react.css";
 
 import Right from './right.jsx'
 
@@ -46,6 +48,13 @@ class PictureDirectory extends Component {
 
             let accessDirectory = this.state.accessDirectory;
             accessDirectory.Dir = directories[0].dir;
+            accessDirectory.Password = directories[0].password;
+            if (accessDirectory.Password) {
+                this.setState({
+                    dialogEnterPwd: true
+                })
+                return;
+            }
             const result = (await fetchPicturesByDir(accessDirectory));
             if (!result.data) {
                 alert(result.message);
@@ -165,10 +174,16 @@ class PictureDirectory extends Component {
                                             this.state.albums.length === 0 ? <Empty /> :
                                                 this.state.albums.map((item, idx) => (
                                                     <div style={{ textAlign: 'center', margin: '15px', display: 'inline-block' }} key={idx}>
-                                                        <Image key={idx}
-                                                            width={200}
-                                                            src={item.base64Context}
-                                                        />
+                                                        {
+                                                            item.name.indexOf(".mov") > -1 ?
+                                                                <Player width={200} fluid={false}>
+                                                                    <source src={item.base64Context} />
+                                                                </Player> :
+                                                                <Image key={idx}
+                                                                    width={200}
+                                                                    src={item.base64Context}
+                                                                />
+                                                        }
                                                         <center>{item.name}</center>
                                                     </div>
                                                 ))
