@@ -24,10 +24,9 @@ class Recommendation extends Component {
     }
 
     componentDidMount() {
-        recommendationArticle(6, r => {
+        recommendationArticle({ top: 4 }, r => {
             let recommdations = []
-            const { data } = r.data;
-            for (const art of data) {
+            for (const art of r.data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
                     bg: art.coverImage,
@@ -52,7 +51,7 @@ class Recommendation extends Component {
                 return (
                     <li className="media" key={idx}>
                         <div className="artimg-img">
-                            <img className="mr-3" src={article.bg} style={{ width:'100px' }} alt="Generic placeholder image" />
+                            <img className="mr-3" src={article.bg} style={{ width: '100px' }} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content">
                             <h5 className="mt-0 mb-1">{article.firstTitle}</h5>
@@ -219,13 +218,6 @@ class Right extends Component {
                             </div>
                         </div>
                         <div className="row bgc mt-3">
-                            <div className="search">
-                                <input type="text" className="search-input" placeholder="First name" />
-                                <input className="search-submit" value={search.key} type="submit" />
-                                <i className="el-search"></i>
-                            </div>
-                        </div>
-                        <div className="row bgc mt-3">
                             <div className="new new-right">
                                 <span><i className="el-headphones"></i>留言</span>
                                 <small>Messages</small>
@@ -252,7 +244,7 @@ class Right extends Component {
                         </div>
 
                         {/* 文章互动及排行 */}
-                        <div className="row bgc mt-5">
+                        <div className="row bgc mt-10">
                             <div className="nav nav-tabs tab-atr" id="box" role="tablist">
                                 <a className="nav-item  active actives" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">文章互动</a>
                                 <a className="nav-item " id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">文章浏览排行</a>

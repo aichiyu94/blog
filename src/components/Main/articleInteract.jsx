@@ -31,7 +31,7 @@ class ArticleInteract extends Component {
                             <a href={'/View?articleId=' + article.id}><img src={article.coverImage} alt="" /></a>
                         </div>
                         <div className="art-hd-list-right">
-                            <span><i className="el-user"></i>{article.authorNickName}</span>
+                            <i className="el-user"></i>{article.authorNickName}
                             <small>{article.modifyTime}</small>
                             <p>{article.firstTitle}</p>
                         </div>

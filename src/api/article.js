@@ -28,8 +28,8 @@ export function getTags(success) {
  * 获取推荐列表
  * @param {*} success 
  */
-export function recommendationArticle(size, success) {
-    request.post('blog/Recommendation?size=' + size, {}, success)
+export function recommendationArticle(data, success) {
+    request.post('blog/Recommendation', data, success)
 }
 
 /**

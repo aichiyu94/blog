@@ -4,7 +4,9 @@ import { fetchArticleList, recommendationArticle } from '../../api/article'
 import { getBanners } from '../../api/user'
 import { timeDiffer, timeFormat } from '../../utils/timeUtils'
 
-import { Pagination, Spin, Space } from 'antd';
+import { Pagination } from 'antd';
+import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { connect } from 'react-redux'
 
@@ -15,7 +17,7 @@ class NewArticles extends Component {
             articles: [],
             pagination: {
                 pageIndex: 1,
-                pageSize: 10,
+                pageSize: 5,
                 totalPage: 0,
                 totalCount: 0,
             }
@@ -32,7 +34,7 @@ class NewArticles extends Component {
             articles.push({
                 id: a.id,
                 title: a.firstTitle,
-                cover: a.coverImage || `${require("../../images/9.jpg")}`,
+                cover: a.coverImage || `${require("../../images/default.png")}`,
                 body: a.body,
                 modifyTime: new Date(a.modifyTime).toString('MM-dd'),
                 author: a.authorNickname,
@@ -67,7 +69,7 @@ class NewArticles extends Component {
         const left = "media wow bounceInLeft";
 
         if (this.state.articles.length <= 0) {
-            return <Space className="MainSpin" size="middle"><Spin size="large" /></Space>
+            return <CircularProgress />
         }
         else {
             return <ul className="list-unstyled art-list">
@@ -97,7 +99,7 @@ class NewArticles extends Component {
                         )
                     })
                 }
-                <Pagination onChange={this.onChange}
+                <Pagination className="text-center" onChange={this.onChange}
                     showQuickJumper
                     pageSize={this.state.pagination.pageSize}
                     defaultCurrent={1} total={this.state.pagination.totalCount} />
@@ -116,14 +118,13 @@ class Recommendation extends Component {
     }
 
     componentDidMount() {
-        recommendationArticle(6, r => {
+        recommendationArticle({ top: 6 }, r => {
             let recommdations = []
-            const { data } = r.data;
-            for (const art of data) {
+            for (const art of r.data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
                     id: art.id,
-                    bg: art.coverImage || `${require('../../images/5.jpg')}`,
+                    bg: art.coverImage || `${require('../../images/default.png')}`,
                     title: art.firstTitle,
                     modifyTime: timeStr,
                     timeSpan: timeDiffer(new Date(art.modifyTime))
@@ -193,7 +194,7 @@ class Home extends React.Component {
                                     <div className="carousel-inner"  >
                                         {
                                             this.state.bannerImages.length <= 0 ?
-                                                <Space className="MainSpin" size="middle"><Spin size="large" /></Space> :
+                                                <CircularProgress /> :
                                                 this.state.bannerImages.map((item, idx) => (
                                                     <div className={idx === 0 ? 'carousel-item active' : 'carousel-item'} key={idx} >
                                                         <img src={item.base64Context} onClick={() => { window.open(item.redirectTo) }} className="d-block w-100" alt="..." />

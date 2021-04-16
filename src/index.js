@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AppRouter from './Router';
 import * as serviceWorker from './serviceWorker';
-import 'antd/dist/antd.min.css';
 import { Provider } from 'react-redux';
 import { configureStore } from './redux/configureStore';
+import 'antd/dist/antd.min.css';
 
 const store = configureStore();
 ReactDOM.render(

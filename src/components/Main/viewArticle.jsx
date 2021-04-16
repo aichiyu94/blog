@@ -3,6 +3,7 @@ import Right from './right.jsx'
 
 import { getArticle, recommendationArticle } from '../../api/article'
 import { timeFormat, timeDiffer } from '../../utils/timeUtils'
+import ReactMarkdown from "react-markdown"
 
 class Recommendation extends Component {
     constructor() {
@@ -19,7 +20,7 @@ class Recommendation extends Component {
             for (const art of data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
-                    cover: art.coverImage || `${require('../../images/5.jpg')}`,
+                    cover: art.coverImage || `${require('../../images/default.png')}`,
                     firstTitle: art.firstTitle,
                     secondTitle: art.secondTitle,
                     modifyTime: timeStr,
@@ -122,7 +123,8 @@ class View extends Component {
 
                             <div className="row mt-2 bgc">
                                 <div className="article-body">
-                                    <div dangerouslySetInnerHTML={{ __html: article.body }}></div>
+                                    {/* <div dangerouslySetInnerHTML={{ __html: article.body }}></div> */}
+                                    <ReactMarkdown className="markdown-body">{article.body}</ReactMarkdown>
                                     <div className="row mt-2">
                                         <div className="col-md-12 bgc">
                                             <div className="new">

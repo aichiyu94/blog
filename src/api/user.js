@@ -36,5 +36,5 @@ export function getVisitors(success) {
  * 获取用户信息
  */
 export function getUserInfo() {
-    return request.postAsync('user/user', {})
+    return request.postAsync('user/me', {})
 }

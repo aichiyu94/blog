@@ -97,14 +97,15 @@ class PictureDirectory extends Component {
         })
     }
 
-    onPageIndexChange = (current) => {
+    onPageIndexChange = async (current) => {
         let dir = this.state.accessDirectory;
         dir.Pagination.pageIndex = current;
         this.setState({
-            accessDirectory: dir
-        })
+            accessDirectory: dir,
+            albumsLoading: true
+        });
 
-        this.nextPage();
+        await this.nextPage();
     }
 
     onShowSizeChange = (current, size) => {

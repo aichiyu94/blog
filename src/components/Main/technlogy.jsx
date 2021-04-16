@@ -18,7 +18,7 @@ class NewArticles extends Component {
                 articles.push({
                     id: a.id,
                     title: a.firstTitle,
-                    cover: a.coverImage || `${require("../../images/9.jpg")}`,
+                    cover: a.coverImage || `${require("../../images/default.png")}`,
                     body: a.body,
                     modifyTime: new Date(a.modifyTime).toString('MM-dd'),
                     author: a.authorNickName,
@@ -78,7 +78,7 @@ class Recommendation extends Component {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
                     id: art.id,
-                    bg: art.coverImage || `${require('../../images/5.jpg')}`,
+                    bg: art.coverImage || `${require('../../images/default.png')}`,
                     timeSpan: timeDiffer(new Date(art.modifyTime)),
                     firstTitle: art.firstTitle,
                     modifyTime: timeStr
