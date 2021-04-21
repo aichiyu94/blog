@@ -45,16 +45,16 @@ a{
     color: #f8b62b!important;
 }
 
+/* 文章标题 */
 .new{
-    height: 40px;
+    height: 70px;
 }
 .new span,.new small{
     display: inline-block;
-    float: left;
     line-height: 40px;
     margin-left: 5px;
 }
-.new span{
+.new center{
     color: #0181da;
 }
 .new small{
@@ -445,28 +445,24 @@ a{
     padding: 10px 0;
     border-bottom: 1px dashed #ccc;
     overflow: hidden;
+    display: inline-flex;
 }
 .art-hd-list-left{
-    float: left;
     width: 50px;
     height: 50px;
-    line-height: 50px;
-    margin-left: 5px;
 }
 .art-hd-list-left a{
     display: inline-block;
 }
 .art-hd-list-left img{
-    /*width: 50px;
-    height: 50px;*/
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
-    width: 100%;
     display: inline-block;
 
 }
 .art-hd-list-right{
-    width: 75%;
-    float: left;
+    width: 85%;
     margin-left: 15px;
 }
 .art-hd-list-right span{
@@ -479,10 +475,8 @@ a{
 }
 .art-hd-list-right p{
     font-size: 13px;
-    overflow: hidden;
     line-height: 15px;
     text-overflow: ellipsis;
-    display: inline-block;
 }
 /*文章排行*/
 .art-sort li{
@@ -652,10 +646,10 @@ a{
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
-    margin: 0 auto;
 }
 .article-title li{
     text-align: center;
+    padding: 1rem;
     float: left;
 }
 .article-title li a{
@@ -665,10 +659,8 @@ a{
 .article-body{
     padding: 20px;
     min-height: 400px;
-    word-break: break-all;
-    overflow: scroll;
+    overflow: hidden;
 }
-
 
 @media screen and (max-width: 1023px) and (min-width: 320px){
     .navbar-lk .navbar-nav>li>a{
@@ -724,3 +716,7 @@ a{
     background: transparent;
     border-radius: 4px;
 }
+
+.tab-content{
+    width: 100%;
+  }

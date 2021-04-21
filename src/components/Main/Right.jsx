@@ -29,7 +29,8 @@ class Recommendation extends Component {
             for (const art of r.data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
-                    bg: art.coverImage,
+                    id: art.id,
+                    coverImage: art.coverImage || `${require('../../images/default.png')}`,
                     timeSpan: timeDiffer(new Date(art.modifyTime)),
                     firstTitle: art.firstTitle,
                     secondTitle: art.secondTitle,
@@ -49,9 +50,9 @@ class Recommendation extends Component {
         return (
             this.state.articles.map((article, idx) => {
                 return (
-                    <li className="media" key={idx}>
+                    <li className="media" key={idx} onClick={() => { window.location.href = 'View?articleId=' + article.id }}>
                         <div className="artimg-img">
-                            <img className="mr-3" src={article.bg} style={{ width: '100px' }} alt="Generic placeholder image" />
+                            <img className="mr-3" src={article.coverImage} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content">
                             <h5 className="mt-0 mb-1">{article.firstTitle}</h5>
@@ -282,9 +283,11 @@ class Right extends Component {
                     </div>
                 </div>
                 : <p></p>
+
         )
     }
 }
+
 
 const mapStateToProps = (state) => {
     return {

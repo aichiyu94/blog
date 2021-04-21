@@ -9,7 +9,7 @@ class WebsiteComment extends React.Component {
         };
     }
     componentDidMount() {
-        websiteCommentList(4, r => {
+        websiteCommentList({ top: 4 }, r => {
             const { data } = r;
             this.setState({
                 commentRank: data

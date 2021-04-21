@@ -11,11 +11,12 @@ class ArticleInteract extends Component {
         }
     }
     componentDidMount() {
-        articleCommentRank(4, r => {
+        articleCommentRank({ top: 4 }, r => {
             const { data } = r;
             for (let c of data) {
                 const timeStr = timeFormat(new Date(c.modifyTime));
                 c.modifyTime = timeStr;
+                c.coverImage = c.coverImage || `${require('../../images/default.png')}`
             }
             this.setState({
                 Interacts: data
@@ -31,8 +32,8 @@ class ArticleInteract extends Component {
                             <a href={'/View?articleId=' + article.id}><img src={article.coverImage} alt="" /></a>
                         </div>
                         <div className="art-hd-list-right">
-                            <i className="el-user"></i>{article.authorNickName}
-                            <small>{article.modifyTime}</small>
+                            <span><i className="el-user"></i>{article.authorNickname}</span>
+                            <time>{article.modifyTime}</time>
                             <p>{article.firstTitle}</p>
                         </div>
                     </li>

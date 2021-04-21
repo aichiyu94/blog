@@ -13,12 +13,12 @@ class NewArticles extends Component {
     componentDidMount() {
         fetchArticleList(1, 5, r => {
             let articles = [];
-            const { data }= r;
+            const { data } = r;
             for (const a of data) {
                 articles.push({
                     id: a.id,
                     title: a.firstTitle,
-                    cover: a.coverImage || `${require("../../images/default.png")}`,
+                    coverImage: a.coverImage || `${require("../../images/default.png")}`,
                     body: a.body,
                     modifyTime: new Date(a.modifyTime).toString('MM-dd'),
                     author: a.authorNickName,
@@ -42,7 +42,7 @@ class NewArticles extends Component {
                 return (
                     <li className={article.way === 'right' ? right : left} key={index}>
                         <div className="art-img">
-                            <img className="mr-3" src={article.cover} alt="Generic placeholder image" />
+                            <img className="mr-3" src={article.coverImage} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content">
                             <h5 className="mt-0 mb-1"><a href={'/View?articleId=' + article.id}>{article.title}</a></h5>
@@ -71,14 +71,13 @@ class Recommendation extends Component {
         }
     }
     componentDidMount() {
-        recommendationArticle(6, r => {
+        recommendationArticle({ top: 6 }, r => {
             let recommdations = []
-            const { data }= r;
-            for (const art of data) {
+            for (const art of r.data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
                     id: art.id,
-                    bg: art.coverImage || `${require('../../images/default.png')}`,
+                    coverImage: art.coverImage || `${require('../../images/default.png')}`,
                     timeSpan: timeDiffer(new Date(art.modifyTime)),
                     firstTitle: art.firstTitle,
                     modifyTime: timeStr
@@ -96,7 +95,7 @@ class Recommendation extends Component {
                     <div className="col-md-4 bgc mb-4" key={idx}>
                         <div className="card  box-shadow mt-4">
                             <div className="showimg">
-                                <img className="card-img-top" style={{ width: '100%', display: 'block' }} src={article.bg} data-holder-rendered="true" />
+                                <img className="card-img-top" src={article.coverImage} data-holder-rendered="true" />
                             </div>
                             <div className="card-body">
                                 <a href={'/View?articleId=' + article.id}>{article.title}</a>

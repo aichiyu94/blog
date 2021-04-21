@@ -12,7 +12,7 @@ class WebsiteMessageRank extends Component {
     }
 
     componentDidMount() {
-        websiteCommentList(4, r => {
+        websiteCommentList({ top: 4 }, r => {
             const { data } = r;
             this.setState({
                 messageRank: data
@@ -47,7 +47,7 @@ class ArticleCommentRank extends Component {
     }
 
     componentDidMount() {
-        articleCommentRank(4, r => {
+        articleCommentRank({ top: 4 }, r => {
             const { data } = r;
             this.setState({
                 commentRank: data
@@ -61,7 +61,7 @@ class ArticleCommentRank extends Component {
                 return (
                     <li className="media" key={idx}>
                         <div className="footer-img">
-                            <img className="mr-3" src={comment.coverImage} alt="Generic placeholder image" />
+                            <img className="mr-3" src={comment.coverImage || `${require('../../images/default.png')}`} alt="Generic placeholder image" />
                         </div>
                         <div className="media-body art-content footer-content">
                             <h5 className="mt-0 mb-1">{comment.text}</h5>

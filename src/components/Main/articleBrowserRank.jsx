@@ -10,7 +10,7 @@ class ArticleBrowserRank extends React.Component {
         }
     }
     componentDidMount() {
-        articleBrowserRank(5, r => {
+        articleBrowserRank({ top: 5 }, r => {
             const { data } = r;
             let rank = [];
             for (const a of data) {

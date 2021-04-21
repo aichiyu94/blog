@@ -5,7 +5,6 @@ import { getBanners } from '../../api/user'
 import { timeDiffer, timeFormat } from '../../utils/timeUtils'
 
 import { Pagination } from 'antd';
-import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { connect } from 'react-redux'
@@ -34,7 +33,7 @@ class NewArticles extends Component {
             articles.push({
                 id: a.id,
                 title: a.firstTitle,
-                cover: a.coverImage || `${require("../../images/default.png")}`,
+                coverImage: a.coverImage || `${require("../../images/default.png")}`,
                 body: a.body,
                 modifyTime: new Date(a.modifyTime).toString('MM-dd'),
                 author: a.authorNickname,
@@ -78,7 +77,7 @@ class NewArticles extends Component {
                         return (
                             <li className={article.way === 'right' ? right : left} key={index}>
                                 <div className="art-img">
-                                    <img className="mr-3" src={article.cover} alt="Generic placeholder image" />
+                                    <img className="mr-3" src={article.coverImage} alt="Generic placeholder image" />
                                 </div>
                                 <div className="media-body art-content">
                                     <h5 className="mt-0 mb-1">
@@ -124,7 +123,7 @@ class Recommendation extends Component {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
                     id: art.id,
-                    bg: art.coverImage || `${require('../../images/default.png')}`,
+                    coverImage: art.coverImage || `${require('../../images/default.png')}`,
                     title: art.firstTitle,
                     modifyTime: timeStr,
                     timeSpan: timeDiffer(new Date(art.modifyTime))
@@ -141,12 +140,12 @@ class Recommendation extends Component {
             this.state.recommdations.map((article, idx) => {
                 return (
                     <div className="col-md-4 bgc mb-4" key={idx}>
-                        <div className="card  box-shadow mt-4">
+                        <div className="card  box-shadow mt-4" onClick={() => { window.location.href = '/View?articleId=' + article.id }}>
                             <div className="showimg">
-                                <img className="card-img-top" style={{ width: '100%', height: '200px', display: 'block' }} src={article.bg} data-holder-rendered="true" />
+                                <img className="card-img-top" style={{ width: '100%', height: '200px', display: 'block' }} src={article.coverImage} data-holder-rendered="true" />
                             </div>
                             <div className="card-body">
-                                <a href={'/View?title=' + article.title}>{article.title}</a>
+                                {article.title}
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btn-group showtitle">
                                         <i className="el-time"></i>{article.modifyTime}
@@ -194,10 +193,10 @@ class Home extends React.Component {
                                     <div className="carousel-inner"  >
                                         {
                                             this.state.bannerImages.length <= 0 ?
-                                                <CircularProgress /> :
+                                                <CircularProgress className="MainSpin" /> :
                                                 this.state.bannerImages.map((item, idx) => (
                                                     <div className={idx === 0 ? 'carousel-item active' : 'carousel-item'} key={idx} >
-                                                        <img src={item.base64Context} onClick={() => { window.open(item.redirectTo) }} className="d-block w-100" alt="..." />
+                                                        <img src={item.imgUrl} onClick={() => { window.open(item.redirectTo) }} className="d-block w-100" alt="..." />
                                                     </div>
                                                 ))
                                         }

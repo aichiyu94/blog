@@ -14,13 +14,13 @@ class Recommendation extends Component {
     }
 
     componentDidMount() {
-        recommendationArticle(6, r => {
+        recommendationArticle({ top: 6 }, r => {
             let recommdations = []
-            const { data } = r.data;
-            for (const art of data) {
+            for (const art of r.data) {
                 const timeStr = timeFormat(new Date(art.modifyTime));
                 recommdations.push({
-                    cover: art.coverImage || `${require('../../images/default.png')}`,
+                    id: art.id,
+                    coverImage: art.coverImage || `${require('../../images/default.png')}`,
                     firstTitle: art.firstTitle,
                     secondTitle: art.secondTitle,
                     modifyTime: timeStr,
@@ -40,11 +40,11 @@ class Recommendation extends Component {
                     <div className="col-md-4 bgc mb-4 " key={idx}>
                         <div className="card mb-4 box-shadow  mt-4">
                             <div className="showimg">
-                                <img className="card-img-top" style={{ width: '100%', display: 'block' }} src={item.cover} data-holder-rendered="true" />
+                                <img className="card-img-top" style={{ width: '100%', height: '200px', display: 'block' }} src={item.coverImage} data-holder-rendered="true" />
                             </div>
 
                             <div className="card-body">
-                                <a href="#">{item.firstTitle}</a>
+                                <a href={'/View?articleId=' + item.id}>{item.firstTitle}</a>
                                 <div className="body-cont">
                                     <span>{item.secondTitle}</span>
                                 </div>
@@ -102,12 +102,21 @@ class View extends Component {
                             <div className="row mt-2">
                                 <div className="col-md-12 bgc">
                                     <div className="new">
-                                        <span>{article.firstTitle}</span>
-                                        {/* <small>New Article</small> */}
+                                        <center className="first">
+                                            <span>{article.firstTitle}</span>
+                                        </center>
+                                        <center>
+                                            <small>{article.secondTitle}</small>
+                                        </center>
                                     </div>
                                 </div>
                             </div>
-
+                            {
+                                article.coverImage != null && article.coverImage.length > 4 ?
+                                    <div style={{ width: '100%', textAlign: 'center' }}>
+                                        <img src={article.coverImage} style={{ width: '100%', display: 'block' }} alt="" /></div> :
+                                    <span></span>
+                            }
                             <div className="row mt-2">
                                 <div className="col-md-12 bgc">
                                     <div className="article-title">
@@ -123,20 +132,19 @@ class View extends Component {
 
                             <div className="row mt-2 bgc">
                                 <div className="article-body">
-                                    {/* <div dangerouslySetInnerHTML={{ __html: article.body }}></div> */}
                                     <ReactMarkdown className="markdown-body">{article.body}</ReactMarkdown>
-                                    <div className="row mt-2">
-                                        <div className="col-md-12 bgc">
-                                            <div className="new">
-                                                <span><i className="el-certificate"></i>推荐图文</span>
-                                                <small>New Article</small>
-                                            </div>
+                                </div>
+                                <div className="row mt-2">
+                                    <div className="col-md-12 bgc">
+                                        <div className="new">
+                                            <span><i className="el-certificate"></i>推荐图文</span>
+                                            <small>Recommended Article</small>
                                         </div>
+                                    </div>
 
-                                        <div className="container mt-4">
-                                            <div className="row">
-                                                <Recommendation />
-                                            </div>
+                                    <div className="container mt-4">
+                                        <div className="row">
+                                            <Recommendation />
                                         </div>
                                     </div>
                                 </div>

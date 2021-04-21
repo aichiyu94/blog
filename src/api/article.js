@@ -36,8 +36,8 @@ export function recommendationArticle(data, success) {
  * 获取文章热点评论
  * @param {*} success 
  */
-export function articleCommentRank(size, success) {
-    request.post('blog/articleCommentRank?size=' + size, {}, success)
+export function articleCommentRank(data, success) {
+    request.post('blog/articleCommentRank', data, success)
 }
 
 
@@ -45,14 +45,14 @@ export function articleCommentRank(size, success) {
  * 获取文章浏览排行
  * @param {*} success 
  */
-export function articleBrowserRank(size, success) {
-    request.post('blog/articleBrowserRank?size=' + size, {}, success)
+export function articleBrowserRank(data, success) {
+    request.post('blog/articleBrowserRank', data, success)
 }
 
 /**
  * 获取网站热点留言
  * @param {*} success 
  */
-export function websiteCommentList(size, success) {
-    request.post('blog/websiteCommentList?size=' + size, {}, success)
+export function websiteCommentList(data, success) {
+    request.post('blog/websiteCommentList', data, success)
 }
