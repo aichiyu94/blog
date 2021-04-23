@@ -76,6 +76,7 @@ class View extends Component {
     componentWillMount() {
         let article = this.state.article;
         article.id = this.props.location.search.split('=')[1]
+        article.tags = [];
         this.setState({
             article: article
         })
@@ -84,7 +85,11 @@ class View extends Component {
     componentDidMount() {
         getArticle(this.state.article.id, r => {
             let a = r.data;
+            if (!a) window.history.go(-1);
             a.modifyTime = timeFormat(a.modifyTime);
+            var keywords = document.querySelector("meta[name='keywords']").content;
+            let newKeywords = keywords + "," + a.tags.join(",");
+            document.querySelector("meta").setAttribute("keywords", newKeywords);
             this.setState({
                 article: a
             })
@@ -94,6 +99,9 @@ class View extends Component {
     render() {
         document.title = this.state.article.firstTitle;
         let article = this.state.article;
+        let tags = article.tags.map(t => {
+            return <span>{t}</span>
+        })
         return (
             <div className="container mt-3">
                 <div className="row">
@@ -114,7 +122,7 @@ class View extends Component {
                             {
                                 article.coverImage != null && article.coverImage.length > 4 ?
                                     <div style={{ width: '100%', textAlign: 'center' }}>
-                                        <img src={article.coverImage} style={{ width: '100%', display: 'block' }} alt="" /></div> :
+                                        <img src={article.coverImage} style={{ display: "inline-flex" }} alt="" /></div> :
                                     <span></span>
                             }
                             <div className="row mt-2">
@@ -123,8 +131,10 @@ class View extends Component {
                                         <ul>
                                             <li><a title={article.authorNickname + article.modifyTime + "发表"}><i className="el-time"></i>{article.modifyTime}</a></li>
                                             <li className="d-none d-sm-none d-md-none d-lg-block"><a href="/index/about/index.html" title={"作者： " + article.authorNickname}><i className="el-user"></i>{article.authorNickname}</a></li>
-                                            <li><a title={'已有' + article.thumbupCount + '个赞'}><i className="el-heart"></i>{article.thumbupCount}</a></li>
-                                            <li><a title={'已有' + article.browserCount + '次浏览'}><i className="el-eye-open"></i>{article.browserCount}</a></li>
+                                            <li><a title={'已有' + article.thumbupCount + '个赞'}><i className="el-heart" color="primary"></i>{article.thumbupCount}</a></li>
+                                            <li><a title={'已有' + article.browserCount + '次浏览'}><i className="el-eye-open" color="primary"></i>{article.browserCount}</a></li>
+                                            <li><i className="el-tag" />
+                                                {tags}</li>
                                         </ul>
                                     </div>
                                 </div>

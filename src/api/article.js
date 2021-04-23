@@ -13,7 +13,7 @@ export async function fetchArticleList(condition) {
  * @param {*} success 
  */
 export function getArticle(id, success) {
-    request.post(`blog/article`, { ArticleId: id }, success)
+    request.post(`blog/article`, { ResourceId: id }, success)
 }
 
 /**

@@ -21,7 +21,7 @@ export function userVisit(success) {
  * @param {*} success 
  */
 export function getBanners(success) {
-    request.post('blog/banners', {}, success)
+    request.get('blog/banners', {}, success)
 }
 
 /**
